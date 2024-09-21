@@ -3,7 +3,7 @@ import Header from "./assets/components/header";
 import NoteCard from "./assets/components/noteCard";
 import CreateNoteForm from "./assets/components/noteForm";
 import api from "./api";
-import { NoteFromDB } from "./interfaces";
+import { NoteCreate, NoteFromDB } from "./interfaces";
 
 function App() {
   const [currentFilter, setCurrentFilter] = useState(() => {
@@ -38,6 +38,29 @@ function App() {
       .catch((error) => alert(error));
   }
 
+  function handleArchiveNote(id: number) {
+    api
+      .put(`/note/archive/${id}`)
+      .then((res) => {
+        if (res.status === 200) console.log("Note archived!");
+        else alert("Failed to archive");
+      })
+      .catch((error) => alert(error));
+    window.location.reload();
+  }
+
+  function handleEditNote(id: number, note: NoteCreate) {
+    api
+      .put(`/note/${id}`, note)
+      .then((res) => {
+        if (res.status === 200) console.log("Note edited");
+        else alert("failed to edit note");
+      })
+      .catch((error) => alert(error));
+    getNotes();
+    window.location.reload();
+  }
+
   function handleDeleteNote(id: number) {
     api
       .delete(`/note/${id}`)
@@ -52,18 +75,6 @@ function App() {
     setCurrentFilter(category);
     localStorage.setItem("filter", category);
   }
-
-  function handleArchiveNote(id: number) {
-    api
-      .put(`/note/archive/${id}`)
-      .then((res) => {
-        if (res.status === 200) console.log("Note archived!");
-        else alert("Failed to archive");
-      })
-      .catch((error) => alert(error));
-    window.location.reload();
-  }
-
   return (
     <>
       <Header />
@@ -121,6 +132,13 @@ function App() {
               >
                 {`go`}
               </button>
+              <button
+                onClick={() => handleNotesFilter("  ")}
+                type="submit"
+                className="h-full bg-softBlue hover:bg-blue text-white text-sm font-MontserratSemibold rounded p-2 shadow-md"
+              >
+                {"clear filter"}
+              </button>
             </div>
             <div
               id="notes-container"
@@ -137,6 +155,7 @@ function App() {
                         onDelete={handleDeleteNote}
                         onArchive={handleArchiveNote}
                         isArchived={note.isArchived}
+                        onEdit={handleEditNote}
                       />
                     );
                   }
@@ -149,6 +168,7 @@ function App() {
                       onDelete={handleDeleteNote}
                       onArchive={handleArchiveNote}
                       isArchived={note.isArchived}
+                      onEdit={handleEditNote}
                     />
                   );
                 }
