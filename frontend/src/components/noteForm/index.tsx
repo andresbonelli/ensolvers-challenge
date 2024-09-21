@@ -1,6 +1,6 @@
-import api from "../../../api";
+import api from "../../api";
 import { useState } from "react";
-import { NoteCreate } from "../../../interfaces";
+import { NoteCreate } from "../../interfaces";
 
 export default function CreateNoteForm({
   onCreateNote,

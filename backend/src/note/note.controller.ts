@@ -26,8 +26,9 @@ export class NoteController {
   }
 
   @Get('archived')
-  getArchived() {
-    return this.service.getArchived();
+  @UseGuards(AuthGuard('jwt'))
+  getArchived(@Req() req: Request) {
+    return this.service.getArchived(req);
   }
 
   @Post()

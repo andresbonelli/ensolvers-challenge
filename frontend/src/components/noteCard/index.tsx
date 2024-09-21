@@ -4,7 +4,7 @@ import EditSquareIcon from "../icons/edit";
 import RestoreIcon from "../icons/restore";
 import TrashIcon from "../icons/trash";
 import SaveIcon from "../icons/save";
-import { NoteCreate } from "../../../interfaces";
+import { NoteCreate } from "../../interfaces";
 
 interface NoteCardProps {
   id: number;

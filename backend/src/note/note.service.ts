@@ -17,8 +17,9 @@ export class NoteService {
     return this.repository.find({ where: { isArchived: false, userId: user } });
   }
 
-  getArchived() {
-    return this.repository.find({ where: { isArchived: true } });
+  getArchived(req: Request) {
+    const user = req.user['id'];
+    return this.repository.find({ where: { isArchived: true, userId: user } });
   }
 
   createOne(note: CreateNoteDto, req: Request) {
