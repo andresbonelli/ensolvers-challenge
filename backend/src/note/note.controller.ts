@@ -19,6 +19,11 @@ export class NoteController {
     return this.service.getAll();
   }
 
+  @Get('archived')
+  getArchived() {
+    return this.service.getArchived();
+  }
+
   @Post()
   create(@Body() note: CreateNoteDto) {
     return this.service.createOne(note);

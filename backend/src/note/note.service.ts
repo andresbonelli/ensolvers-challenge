@@ -12,7 +12,11 @@ export class NoteService {
   ) {}
 
   getAll() {
-    return this.repository.find();
+    return this.repository.find({ where: { isArchived: false } });
+  }
+
+  getArchived() {
+    return this.repository.find({ where: { isArchived: true } });
   }
 
   createOne(note: CreateNoteDto) {
