@@ -26,8 +26,8 @@ export default function NoteCard({
   onEdit,
 }: NoteCardProps) {
   const [isEditing, setIsEditing] = useState(false);
-  const [editContent, setEditContent] = useState("");
-  const [editCategory, setEditCategory] = useState("");
+  const [editContent, setEditContent] = useState(content);
+  const [editCategory, setEditCategory] = useState(category ?? "");
   const bgColor = isArchived ? "bg-gray-200" : "bg-orange-100";
   const fontColor = isArchived ? "text-gray-400" : "text-black";
 
@@ -52,14 +52,12 @@ export default function NoteCard({
             <textarea
               value={editContent}
               onChange={(e) => setEditContent(e.target.value)}
-              placeholder={content}
               className={`text-lg border border-black font-MontserratLight ${bgColor}`}
             />
             <input
               type="text"
               className={`text-sm border border-black font-MontserratLight ${bgColor}`}
               value={editCategory}
-              placeholder={category ?? ""}
               onChange={(e) => setEditCategory(e.target.value)}
             />
             <button
