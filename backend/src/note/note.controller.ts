@@ -7,7 +7,7 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { NoteService as NoteService } from './note.service';
+import { NoteService } from './note.service';
 import { CreateNoteDto, EditNoteDto } from './note.dto';
 
 @Controller('note')

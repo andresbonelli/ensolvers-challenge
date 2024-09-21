@@ -10,7 +10,7 @@ function App() {
     return localStorage.getItem("filter") || "";
   });
   const [filterInput, setFilterInput] = useState("");
-  const [currentNotes, setCurrentNotes] = useState<NoteFromDB[] | null>(null);
+  const [currentNotes, setCurrentNotes] = useState<NoteFromDB[]>([]);
 
   useEffect(() => {
     getNotes();
@@ -133,7 +133,7 @@ function App() {
                 {`go`}
               </button>
               <button
-                onClick={() => handleNotesFilter("  ")}
+                onClick={() => handleNotesFilter("")}
                 type="submit"
                 className="h-full bg-softBlue hover:bg-blue text-white text-sm font-MontserratSemibold rounded p-2 shadow-md"
               >
