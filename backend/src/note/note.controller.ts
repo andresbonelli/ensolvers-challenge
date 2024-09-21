@@ -6,17 +6,23 @@ import {
   Body,
   Param,
   Delete,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
 import { NoteService } from './note.service';
+import { JwtService } from '@nestjs/jwt';
 import { CreateNoteDto, EditNoteDto } from './note.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { Request } from 'express';
 
 @Controller('note')
 export class NoteController {
   constructor(private readonly service: NoteService) {}
 
   @Get()
-  getAll() {
-    return this.service.getAll();
+  @UseGuards(AuthGuard('jwt'))
+  getAll(@Req() req: Request) {
+    return this.service.getAll(req);
   }
 
   @Get('archived')
@@ -25,8 +31,9 @@ export class NoteController {
   }
 
   @Post()
-  create(@Body() note: CreateNoteDto) {
-    return this.service.createOne(note);
+  @UseGuards(AuthGuard('jwt'))
+  create(@Req() req: Request, @Body() note: CreateNoteDto) {
+    return this.service.createOne(note, req);
   }
 
   @Put(':id')

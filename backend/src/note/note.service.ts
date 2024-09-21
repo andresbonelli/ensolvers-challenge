@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Note } from './note.entity';
 import { CreateNoteDto, EditNoteDto } from './note.dto';
+import { Request } from 'express';
 
 @Injectable()
 export class NoteService {
@@ -11,21 +12,25 @@ export class NoteService {
     private repository: Repository<Note>,
   ) {}
 
-  getAll() {
-    return this.repository.find({ where: { isArchived: false } });
+  getAll(req: Request) {
+    const user = req.user['id'];
+    return this.repository.find({ where: { isArchived: false, userId: user } });
   }
 
   getArchived() {
     return this.repository.find({ where: { isArchived: true } });
   }
 
-  createOne(note: CreateNoteDto) {
+  createOne(note: CreateNoteDto, req: Request) {
+    const user = req.user['id'];
     const newNote = new Note();
+    newNote.userId = user;
     newNote.title = note.title;
+
     if (note.category) {
       newNote.category = note.category;
     }
-    return this.repository.save(note);
+    return this.repository.save(newNote);
   }
 
   async toggleIsArchived(id: number) {

@@ -11,8 +11,8 @@ export class UserService {
     private repository: Repository<User>,
   ) {}
 
-  createOne(user: CreateUserDto) {
-    const existingUser = this.repository
+  async createOne(user: CreateUserDto) {
+    const existingUser = await this.repository
       .find({
         where: { username: user.username },
       })
@@ -23,7 +23,6 @@ export class UserService {
       newUser.password = user.password;
       return this.repository.save(newUser);
     }
-    return null;
   }
 
   getAll() {

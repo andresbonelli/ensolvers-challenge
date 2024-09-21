@@ -13,4 +13,7 @@ export class Note {
 
   @Column({ default: false })
   isArchived: boolean;
+
+  @Column()
+  userId: number;
 }
