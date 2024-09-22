@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
@@ -22,7 +22,7 @@ export class UserService {
       newUser.username = user.username;
       newUser.password = user.password;
       return this.repository.save(newUser);
-    }
+    } else throw new HttpException('user taken', 409);
   }
 
   getAll() {
