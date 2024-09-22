@@ -12,14 +12,11 @@ export class NoteService {
     private repository: Repository<Note>,
   ) {}
 
-  getAll(req: Request) {
+  getAll(req: Request, getArchived: boolean) {
     const user = req.user['id'];
-    return this.repository.find({ where: { isArchived: false, userId: user } });
-  }
-
-  getArchived(req: Request) {
-    const user = req.user['id'];
-    return this.repository.find({ where: { isArchived: true, userId: user } });
+    return this.repository.find({
+      where: { isArchived: getArchived, userId: user },
+    });
   }
 
   createOne(note: CreateNoteDto, req: Request) {

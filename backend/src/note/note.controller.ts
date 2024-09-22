@@ -5,6 +5,7 @@ import {
   Put,
   Body,
   Param,
+  Query,
   Delete,
   UseGuards,
   Req,
@@ -21,14 +22,11 @@ export class NoteController {
 
   @Get()
   @UseGuards(AuthGuard('jwt'))
-  getAll(@Req() req: Request) {
-    return this.service.getAll(req);
-  }
-
-  @Get('archived')
-  @UseGuards(AuthGuard('jwt'))
-  getArchived(@Req() req: Request) {
-    return this.service.getArchived(req);
+  getAll(
+    @Req() req: Request,
+    @Query('getArchived') getArchived: boolean = false,
+  ) {
+    return this.service.getAll(req, getArchived);
   }
 
   @Post()
