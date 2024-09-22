@@ -24,7 +24,7 @@ export class AuthController {
     return user;
   }
 
-  @Get('auth_user')
+  @Get('user')
   @UseGuards(AuthGuard('jwt'))
   readCurrentUser(@Req() req: Request) {
     console.log(req.user);

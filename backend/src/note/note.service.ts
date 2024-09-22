@@ -34,18 +34,21 @@ export class NoteService {
     return this.repository.save(newNote);
   }
 
-  async toggleIsArchived(id: number) {
-    const note = await this.repository.findOne({ where: { id: id } });
-    if (note) {
-      note.isArchived = !note.isArchived;
-      return this.repository.save(note);
+  async toggleIsArchived(req: Request, id: number) {
+    const user = req.user['id'];
+    const noteFromDB = await this.repository.findOne({ where: { id: id } });
+    if (noteFromDB && noteFromDB.userId === user) {
+      noteFromDB.isArchived = !noteFromDB.isArchived;
+      return this.repository.save(noteFromDB);
     }
     return null;
   }
 
-  async update(id: number, note: EditNoteDto) {
+  async update(req: Request, id: number, note: EditNoteDto) {
+    const user = req.user['id'];
     const noteFromDB = await this.repository.findOne({ where: { id: id } });
-    if (noteFromDB) {
+
+    if (noteFromDB && noteFromDB.userId === user) {
       if (note.title) {
         noteFromDB.title = note.title;
       }
@@ -57,9 +60,13 @@ export class NoteService {
     return null;
   }
 
-  delete(id: number) {
-    return this.repository.delete(id).then((result) => {
-      console.debug(result.raw);
-    });
+  async delete(req: Request, id: number) {
+    const user = req.user['id'];
+    const noteFromDB = await this.repository.findOne({ where: { id: id } });
+    if (noteFromDB && noteFromDB.userId === user) {
+      const result = await this.repository.delete(id);
+      return result;
+    }
+    return null;
   }
 }

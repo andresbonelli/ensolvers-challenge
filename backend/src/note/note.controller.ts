@@ -8,9 +8,9 @@ import {
   Delete,
   UseGuards,
   Req,
+  HttpException,
 } from '@nestjs/common';
 import { NoteService } from './note.service';
-import { JwtService } from '@nestjs/jwt';
 import { CreateNoteDto, EditNoteDto } from './note.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
@@ -38,17 +38,30 @@ export class NoteController {
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() note: EditNoteDto) {
-    return this.service.update(id, note);
+  @UseGuards(AuthGuard('jwt'))
+  async update(
+    @Req() req: Request,
+    @Param('id') id: number,
+    @Body() note: EditNoteDto,
+  ) {
+    const res = await this.service.update(req, id, note);
+    if (!res) throw new HttpException('access denied', 401);
+    return res;
   }
 
   @Put('archive/:id')
-  archive(@Param('id') id: number) {
-    return this.service.toggleIsArchived(id);
+  @UseGuards(AuthGuard('jwt'))
+  async archive(@Req() req: Request, @Param('id') id: number) {
+    const res = await this.service.toggleIsArchived(req, id);
+    if (!res) throw new HttpException('access denied', 401);
+    return res;
   }
 
   @Delete(':id')
-  delete(@Param('id') id: number) {
-    return this.service.delete(id);
+  @UseGuards(AuthGuard('jwt'))
+  async delete(@Req() req: Request, @Param('id') id: number) {
+    const res = await this.service.delete(req, id);
+    if (!res) throw new HttpException('access denied', 401);
+    return res;
   }
 }

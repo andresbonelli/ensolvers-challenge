@@ -84,7 +84,7 @@ export default function Home() {
 
   return (
     <main className="relative flex sm:flex-row flex-col sm:gap-20 ">
-      <div className="sm:absolute sm:top-10 sm:right-20 flex justify-center place-items-center mt-5">
+      <div className="sm:absolute sm:top-10 sm:right-20 flex justify-center place-items-center mt-5 ">
         <button
           onClick={Logout}
           className="bg-gray-400 hover:bg-gray-600 text-white text-sm font-MontserratSemibold rounded p-2 shadow-md w-24"
@@ -114,7 +114,7 @@ export default function Home() {
           <h3 className="font-MontserratSemibold text-3xl text-center ">
             My notes
           </h3>
-          <div className="flex flex-row justify-start w-full gap-5 ml-7">
+          <div className="flex flex-row  justify-center w-full gap-5 ">
             <button
               onClick={getNotes}
               className="bg-softGreen hover:bg-green text-white text-sm font-MontserratSemibold rounded p-2 shadow-md w-24"
@@ -128,8 +128,7 @@ export default function Home() {
               archived
             </button>
           </div>
-          <div className="flex flex-row justify-center place-items-center gap-5  ">
-            {/* <label htmlFor="filter-notes">Filter:</label> */}
+          <div className="flex flex-row justify-center place-items-center max-w-full gap-5  ">
             <input
               value={filterInput ?? ""}
               onChange={(e) => setFilterInput(e.target.value)}
@@ -143,14 +142,14 @@ export default function Home() {
               type="submit"
               className="h-full bg-softBlue hover:bg-blue text-white text-sm font-MontserratSemibold rounded p-2 shadow-md"
             >
-              {`go`}
+              filter
             </button>
             <button
               onClick={() => handleNotesFilter("")}
               type="submit"
               className="h-full bg-softBlue hover:bg-blue text-white text-sm font-MontserratSemibold rounded p-2 shadow-md"
             >
-              {"clear filter"}
+              clear
             </button>
           </div>
           <div

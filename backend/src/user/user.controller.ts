@@ -14,23 +14,8 @@ import { CreateUserDto } from './user.dto';
 export class UserController {
   constructor(private readonly service: UserService) {}
 
-  @Get()
-  getAll() {
-    return this.service.getAll();
-  }
-
-  @Get(':id')
-  getUser(@Param('id') id: number) {
-    return this.service.getByID(id);
-  }
-
   @Post()
   create(@Body() user: CreateUserDto) {
     return this.service.createOne(user);
-  }
-
-  @Delete(':id')
-  delete(@Param('id') id: number) {
-    return this.service.delete(id);
   }
 }

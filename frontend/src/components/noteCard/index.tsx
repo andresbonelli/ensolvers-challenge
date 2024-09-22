@@ -41,7 +41,7 @@ export default function NoteCard({
   };
 
   return (
-    <div id="card-container" className="relative w-full max-w-96">
+    <div id="card-container" className="relative w-full sm:max-w-96 max-w-80  ">
       <div
         key={id}
         id="note-card"
