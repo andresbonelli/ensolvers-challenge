@@ -18,6 +18,6 @@ export class AuthService {
     if (userFromDB.password === payload.password) {
       const { password, ...user } = userFromDB;
       return this.jwt.sign(user);
-    }
+    } else throw new HttpException('invalid credentials', 401);
   }
 }
