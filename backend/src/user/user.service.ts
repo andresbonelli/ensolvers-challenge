@@ -21,20 +21,22 @@ export class UserService {
       const newUser = new User();
       newUser.username = user.username;
       newUser.password = user.password;
+      // TODO: encrypt stored passwords
       return this.repository.save(newUser);
     } else throw new HttpException('user taken', 409);
   }
 
+  getByUsername(username: string) {
+    return this.repository.find({ where: { username: username } });
+  }
+
+  // For future admin endpoints. Not yet implemented.
   getAll() {
     return this.repository.find();
   }
 
   getByID(id: number) {
     return this.repository.find({ where: { id: id } });
-  }
-
-  getByUsername(username: string) {
-    return this.repository.find({ where: { username: username } });
   }
 
   delete(id: number) {
