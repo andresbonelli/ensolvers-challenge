@@ -18,7 +18,7 @@ Before running the app, ensure that you have the following prerequisites:
 
 To start a local instance of the app, follow these steps (linux/mac):
 
-1. Clone this repository: `[git clone https://github.com/andresbonelli/Bonelli-f9f0ce](https://github.com/andresbonelli/ensolvers-challenge-backend)`
+1. Clone this repository: `git clone https://github.com/andresbonelli/ensolvers-challenge-backend`
 
 2. Navigate to backend dir `backend`
 
